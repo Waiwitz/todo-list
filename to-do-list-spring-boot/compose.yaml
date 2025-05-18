@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  pgadmin:
+    container_name: pgadmin_todo_list_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: null
+    image: dpage/pgadmin4:latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8888"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: pgadmin_data
+        target: /var/lib/pgadmin
+        volume: {}
+  postgres:
+    container_name: todolist-postgres
+    environment:
+      POSTGRES_DB: todolist
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: admin
+    image: postgres:latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: todo_list_data
+        target: /var/lib/postgresql/data
+        volume: {}
+  redis:
+    image: redis:latest
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 6379
+        protocol: tcp
+networks:
+  default:
+    name: to-do-list-spring-boot_default
+volumes:
+  pgadmin_data:
+    name: to-do-list-spring-boot_pgadmin_data
+  todo_list_data:
+    name: to-do-list-spring-boot_todo_list_data

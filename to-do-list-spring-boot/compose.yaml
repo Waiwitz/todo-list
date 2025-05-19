@@ -5,15 +5,10 @@ services:
     container_name: pgadmin_todo_list_container
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@email.com
-      PGADMIN_DEFAULT_PASSWORD: null
+      PGADMIN_DEFAULT_PASSWORD: admin
     image: dpage/pgadmin4:latest
-    networks:
-      default: null
     ports:
-      - mode: ingress
-        target: 80
-        published: "8888"
-        protocol: tcp
+      - "8888:80"
     volumes:
       - type: volume
         source: pgadmin_data

@@ -13,6 +13,7 @@ public class JwtUtil {
     private final Date CURRENT_TIME = new Date(System.currentTimeMillis());
     private final Date EXPIRATION_TIME = new Date(CURRENT_TIME.getTime() + 1000 * 60 * 60 * 1);
 
+    // generate token
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -22,6 +23,7 @@ public class JwtUtil {
                 .compact();
     }
 
+    // decode token and return username
     public String extractUsername(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
